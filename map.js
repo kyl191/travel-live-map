@@ -6,16 +6,13 @@ jQuery(document).ready(function() {
 	
 	// Initialize markers
 	jQuery.getJSON("load.php", function(data) {
-		console.log(data);
 		for (var i = 0, I = data.length; i < I; i++) {
 			var pos = new google.maps.LatLng(data[i]['lat'], data[i]['long']);
-			console.log(pos);
 			vertexes.push(pos);
 			var marker = new google.maps.Marker({position: pos, title: data[i]['timestamp']});
 			marker.setMap(window.map);
 			recent = marker;
 		};
-		console.log(vertexes);
 		recent.setIcon("http://www.google.com/mapfiles/dd-start.png");
 		recent.setZIndex(999);
 		$('#map').after("<p>Most recent update: " + recent.getTitle() + "</p><a href=\"#\" id=\"gotolink\">Go to most recent location</a>");
