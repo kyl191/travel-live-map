@@ -1,51 +1,5 @@
 var currentMarker = new google.maps.Marker(), currentPoly = new google.maps.Polygon(), currentInfo = -1, currentXHR = -1, openedInfoWindows = {}, infoWindowTimer = false, map = false, markers = new Array();
 
-function getContent(overlayID) {
-	currentInfo = overlayID;
-	if (currentXHR != -1) currentXHR.abort();
-	
-	jQuery('#info').stop().fadeOut('fast', function() {
-		$this = jQuery(this);
-		$this.html('<h1>Loading...</h1><br /><img id="loadingbar" src="themes/seacs/images/ajax-loader.gif" />');
-		$this.fadeIn('fast', function() {
-			currentXHR = jQuery.ajax({
-			url: window.location.pathname + 'getMapContent/' + overlayID,
-			success: function(data) {
-				$this.fadeOut('fast', function() {
-					$this.html(data);
-					jQuery('img', $this).setupShadowbox();
-					jQuery('#info').fadeIn('fast', function() {
-						if (jQuery.browser.msie){this.style.removeAttribute('filter');}
-					});
-					jQuery('#info').append("<p><a id=\"scrolltop\">Return to top</a></p>").fadeIn('fast');
-					jQuery('#scrolltop').click(function(e) {
-						e.preventDefault();
-						jQuery('html, body').animate({scrollTop:'300px'}, 'fast');
-					});
-					currentXHR = -1;
-				});
-			},
-			error: function(xhr, errorStr, e) {
-				$this.fadeOut('fast', function() {
-					currentInfo = 'home';
-					$this.html('<h1>Error!</h1><p>An error occured while loading the content. The error was: ' + errorStr);
-					jQuery('#info').fadeIn('fast', function() {
-						if (jQuery.browser.msie){this.style.removeAttribute('filter');}
-					});
-					currentXHR = -1;
-				});
-			}
-			});
-		});
-	});
-}
-
-function faq(){
-	currentMarker.setIcon('http://www.google.com/mapfiles/marker.png');
-	currentPoly.setOptions({fillColor: '#A84EF2'});
-	getContent("FAQ");
-	}
-	
 function changeMarker(overlayID) {
 	marker = null;
 	for (var i=0, length = markers.length; i< length;i++){
