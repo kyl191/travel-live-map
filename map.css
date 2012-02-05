@@ -3,21 +3,4 @@
 	width:960px;
 	border: 2px solid #797979;
 	}
-
-.gmapslabel {
-	border: 2px solid #000000;
-	background-color: #ffffff;
-	color: #000099;
-	font-family: Tahoma, sans-serif;
-	font-size: 10px;
-	font-weight: bold;
-	padding: 1px;
-	white-space: nowrap;
-	opacity: 0.7;
-	margin:1px;
-}
-
-.labelproto {
-	visibility: hidden;
-	opacity: 1;
-}
+	
