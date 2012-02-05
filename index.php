@@ -4,6 +4,6 @@
 <script type="text/javascript" src="map.js"></script>
 </head>
 <body>
-
+<div id="map"></div>
 </body>
 </html>
