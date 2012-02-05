@@ -1,69 +1,14 @@
-var currentMarker = new google.maps.Marker(), currentPoly = new google.maps.Polygon(), currentInfo = -1, currentXHR = -1, openedInfoWindows = {}, infoWindowTimer = false, map = false, markers = new Array();
-
-function changeMarker(overlayID) {
-	marker = null;
-	for (var i=0, length = markers.length; i< length;i++){
-		if(overlayID == markers[i].id) {
-			marker = markers[i];
-			break;
-		}
-	}
-	updateMarker(marker);
-
-}
-
-function updateMarker(marker){
-	if (currentInfo != marker.id) {
-		currentMarker.setIcon('http://www.google.com/mapfiles/marker.png');
-		currentMarker.setZIndex(currentMarker.origZ);
-		currentPoly.setOptions({fillColor: '#A84EF2'});
-		if (marker.id.substr(0,5) == 'Point'){
-			marker.setIcon('http://www.google.com/mapfiles/dd-start.png');
-			currentMarker = marker;
-			currentMarker.setZIndex(999);
-			map.panTo(marker.getPosition());
-		} else {
-			marker.setOptions({fillColor: '#68BF4C'});
-			currentPoly = marker;
-			map.panTo(marker.infoWindow.getPosition());
-		}
-		getContent(marker.id);
-		if (map.getZoom() == defaultZoom){
-			map.setZoom(defaultZoom+1);
-		}
-		}
-}
+var currentMarker = new google.maps.Marker(), currentInfo = -1, currentXHR = -1, openedInfoWindows = {}, infoWindowTimer = false, map = false, markers = new Array();
 
 jQuery(document).ready(function() {
-	var cacheImage = document.createElement('img');
-	cacheImage.src = 'themes/seacs/images/ajax-loader.gif';
-	
-	jQuery('.left li').click(function(e) {
-		e.preventDefault();
-		jQuery('html, body').animate({scrollTop:'600px'}, 'fast');
-	});
-	jQuery('.left h2').click(function(e) {
-		e.preventDefault();
-		jQuery('html, body').animate({scrollTop:'600px'}, 'fast');
-	});
-	
-	currentInfo = 'home';
+	var center = new google.maps.LatLng( 43.34355, 141.211575);
 	window.map = new google.maps.Map(jQuery('#map').get(0), {zoom:defaultZoom, center: center, mapTypeId:google.maps.MapTypeId.TERRAIN, streetViewControl:false});
 	
 	// Initialize markers
 	jQuery.getJSON(window.location.pathname + '/getMarkers', function(data) {
 		for (var i = 0, I = data.length; i < I; i++) {
-			var marker = false;
-			var labelNode = jQuery('<span class="gmapslabel labelproto">' + data[i][2] +'</span>');
-			jQuery('#map').after(labelNode);
-			var labelWidth = labelNode.width();
-			var offset = Math.round(labelNode.width() / 2);
-			labelNode.remove();
-			
-			marker = new MarkerWithLabel({position: new google.maps.LatLng(data[i][1][0], data[i][1][1]), labelContent: data[i][2], labelClass: 'gmapslabel', labelAnchor: new google.maps.Point(offset, 0), labelStyle: {width: labelWidth}, labelZIndex: 10});
+			var marker = new Marker({position: new google.maps.LatLng(data[i][1][0], data[i][1][1]), title: data[i][2]});
 			marker.setMap(map);
-			marker.id = 'Point-' + data[i][0];
-			marker.origZ = 10;
 			window.markers.push(marker);
 			
 			google.maps.event.addListener(marker, 'mouseover', function(e) {
