@@ -1,11 +1,12 @@
 <?php include("db.php");
 if($db){
-	$sql = "INSERT INTO points (`lat`,`long`) VALUES (:lat, :long)";
+	$sql = "INSERT INTO points (`lat`,`long`, `timestamp`) VALUES (:lat, :long, :timestamp)";
 $sth = $db->prepare($sql);
 $sth->bindParam('lat', $_GET['lat']);
 $sth->bindParam('long', $_GET['long']);
-$sth->execute();
-$result = $sth->fetchAll();
+$date = new DateTime("now", new DateTimeZone("Asia/Singapore"));
+$sth->bindParam('timestamp', $date->format(DATE_RFC850));
+$result =$sth->execute();
 	if ($result) {
 		echo "OK";
 	} else {
