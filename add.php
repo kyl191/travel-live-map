@@ -19,14 +19,22 @@
             },
             mapTypeId: google.maps.MapTypeId.TERRAIN
             };
-            map = new google.maps.Map(
-                document.getElementById("mapContainer"), mapOptions
-                );
-            var marker = new google.maps.Marker({
+        map = new google.maps.Map(jQuery('#map').get(0), mapOptions);
+        var marker = new google.maps.Marker({
                     position: coords,
                     map: map,
                     title: "Your current location!"
             });
+
+        map.panTo(marker.getPosition());
+        $.ajax({
+            url: "save.php", 
+            data: {lat: latitude, long: longitude}, 
+            error: function(data){
+                alert("Error uploading: " + data);
+            }
+        });
+
  
         });
     }else {
