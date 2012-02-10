@@ -15,7 +15,7 @@
         }
         $.ajax({
             url: "save.php", 
-            data: {lat: marker.getPosition().lat(), long: marker.getPosition().lng(), timestamp: timestamp, password: password}, 
+            data: {lat: marker.getPosition().lat(), long: marker.getPosition().lng(), timestamp: timestamp, password: window.password}, 
             error: function(data){
                 console.log(data);
                 alert("Error uploading: " + data);
@@ -46,9 +46,11 @@
 
     function submit(){
         if (navigator.geolocation) {
+            getCoords();
             for(var i = 0; i< addVertexes.length; i++){
                 saveCoords(addVertexes[i][0], addVertexes[i][1]);
             }
+            alert("Upload successful!");
         }
     }
 
