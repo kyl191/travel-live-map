@@ -19,7 +19,7 @@ jQuery(document).ready(function() {
 		jQuery('#gotolink').click(function(e) {
 			e.preventDefault();
 			window.map.panTo(recent.getPosition());
-			window.map.setZoom(15);
+			window.map.setZoom(12);
 		});
 
 		var polyline = new google.maps.Polyline({
