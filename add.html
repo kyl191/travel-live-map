@@ -33,11 +33,11 @@
                     position: coords,
                     map: window.map
             });
-
-        window.map.panTo(marker.getPosition());
-        });
         var timestamp = Math.round(new Date().getTime() / 1000);
         vertexes.push([marker, timestamp]);
+        window.map.panTo(marker.getPosition());
+        });
+
     } 
 
     function submit(){
