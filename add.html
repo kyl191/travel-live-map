@@ -12,14 +12,6 @@
 <script type="text/javascript" src="map.js"></script>
 <script type="text/javascript">
     var vertexes = [];
-    var addPolyline = new google.maps.Polyline({
-        path: vertexes,
-        strokeColor: "#00FF00",
-        strokeOpacity: 1.0,
-        strokeWeight: 2
-    });
-
-    addPolyline.setMap(window.map);
 
     function saveCoords(marker, timestamp){
         if (typeof timestamp === "undefined"){
@@ -49,8 +41,6 @@
 
         window.map.panTo(marker.getPosition());
         });
-        var path = addPolyline.getPath();
-        path.push(marker.getPosition());
         var timestamp = Math.round(new Date().getTime() / 1000);
         vertexes.push([marker, timestamp]);
     } 
