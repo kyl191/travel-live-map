@@ -5,7 +5,7 @@
 <?php include("db.php");
 if ($_GET['password'] != "buns") {
 	header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden', true, 403);
-	die("Wrong password.")
+	die("Wrong password.");
 }
 if($db){
 	$sql = "INSERT INTO points (`lat`,`long`, `timestamp`, `timestamp_old`) VALUES (:lat, :long, :timestamp, :timestamp_old)";
