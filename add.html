@@ -31,8 +31,7 @@
         var coords = new google.maps.LatLng(latitude, longitude);
         var marker = new google.maps.Marker({
                     position: coords,
-                    map: window.map,
-                    title: "Your current location!"
+                    map: window.map
             });
 
         map.panTo(marker.getPosition());
