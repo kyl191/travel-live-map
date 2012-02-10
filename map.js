@@ -9,7 +9,7 @@ jQuery(document).ready(function() {
 		for (var i = 0, I = data.length; i < I; i++) {
 			var pos = new google.maps.LatLng(data[i]['lat'], data[i]['long']);
 			vertexes.push(pos);
-			var marker = new google.maps.Marker({position: pos, title: data[i]['timestamp']});
+			var marker = new google.maps.Marker({position: pos, title: data[i]['timestamp_old']});
 			marker.setMap(window.map);
 			recent = marker;
 		};
