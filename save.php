@@ -1,6 +1,6 @@
 <?php include("db.php");
 if($db){
-	$sql = "INSERT INTO points (`lat`,`long`, `timestamp`) VALUES (:lat, :long, :timestamp)";
+	$sql = "INSERT INTO points (`lat`,`long`, `timestamp_old`) VALUES (:lat, :long, :timestamp)";
 $sth = $db->prepare($sql);
 $sth->bindParam('lat', $_GET['lat']);
 $sth->bindParam('long', $_GET['long']);
