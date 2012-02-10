@@ -15,7 +15,7 @@
     function saveCoords(){
         $.ajax({
             url: "save.php", 
-            data: {lat: latitude, long: longitude}, 
+            data: {lat: latitude, long: longitude, timestamp: timestamp, password: password}, 
             error: function(data){
                 alert("Error uploading: " + data);
             },
@@ -38,6 +38,14 @@
         map.panTo(marker.getPosition());
         saveCoords();
         });
+    if (navigator.geolocation) {
+        if ($.cookie('auth')){
+            window.password = $.cookie('auth');
+        } else {
+            window.password = window.prompt('Enter password:');
+            $.cookie('auth', password, {expires: 30, path: '/'} );  
+        }
+
     } else {
         // Do nothing.
     }
