@@ -1,7 +1,3 @@
-// Todo: 
-// - Check for password
-// - Allow timestamp to be specified (allows recorded updates)
-// - possibly use JSON for updates - json_encode/decode is probably trivial, though I'd need to see the array that gets sent... 
 <?php include("db.php");
 if ($_GET['password'] != "buns") {
 	header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden', true, 403);
