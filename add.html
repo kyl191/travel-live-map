@@ -11,32 +11,59 @@
 <script type="text/javascript" src="jquery.cookie.js"></script>
 <script type="text/javascript" src="map.js"></script>
 <script type="text/javascript">
-    var latitude = 0, longitude = 0;
-    function saveCoords(){
+    var vertexes = [];
+    var addPolyline = new google.maps.Polyline({
+        path: vertexes,
+        strokeColor: "#00FF00",
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+    });
+
+    addPolyline.setMap(window.map);
+
+    function saveCoords(marker, timestamp){
+        if (typeof timestamp === "undefined"){
+            console.log("Time undefined...");
+            timestamp = Math.round(new Date().getTime() / 1000);
+        }
         $.ajax({
             url: "save.php", 
-            data: {lat: latitude, long: longitude, timestamp: timestamp, password: password}, 
+            data: {lat: marker.getPosition().lat(), long: marker.getPosition().lng(), timestamp: timestamp, password: password}, 
             error: function(data){
                 alert("Error uploading: " + data);
             },
             success: function(data){
-                alert("Uploaded coordinates successfully!");
             }
         });
     }
-    if (navigator.geolocation) {
+    
+    function getCoords(){
         navigator.geolocation.getCurrentPosition(function(position){
-        latitude = position.coords.latitude;
-        longitude = position.coords.longitude;
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
         var coords = new google.maps.LatLng(latitude, longitude);
         var marker = new google.maps.Marker({
                     position: coords,
                     map: window.map
             });
 
-        map.panTo(marker.getPosition());
-        saveCoords();
+        window.map.panTo(marker.getPosition());
         });
+        var path = addPolyline.getPath();
+        path.push(marker.getPosition());
+        var timestamp = Math.round(new Date().getTime() / 1000);
+        vertexes.push([marker, timestamp]);
+    } 
+
+    function submit(){
+        if (navigator.geolocation) {
+            for(var i = 0; i< vertexes.length; i++){
+                saveCoords(vertexes[i][0], vertexes[i][1]);
+            }
+        }
+    }
+
+jQuery(document).ready(function() {
     if (navigator.geolocation) {
         if ($.cookie('auth')){
             window.password = $.cookie('auth');
@@ -44,13 +71,17 @@
             window.password = window.prompt('Enter password:');
             $.cookie('auth', password, {expires: 30, path: '/'} );  
         }
-
+        getCoords();
+        var intervalID = setInterval(getCoords, 300000);
     } else {
-        // Do nothing.
+        alert("Your browser doesn't support geolocation. This page will do nothing.");
     }
+});
+
 	</script>
 </head>
 <body>
 <div id="map"></div>
+<button type="button" onclick="submit();">Update maps...</button> 
 </body>
 </html> 
