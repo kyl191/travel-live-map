@@ -35,9 +35,11 @@
                     position: coords,
                     map: window.map
             });
+        marker.setIcon("http://www.google.com/mapfiles/dd-end.png");
         var timestamp = Math.round(new Date().getTime() / 1000);
         addVertexes.push([marker, timestamp]);
         window.map.panTo(marker.getPosition());
+        window.map.setZoom(14);
         });
 
     } 
