@@ -17,9 +17,11 @@
             url: "save.php", 
             data: {lat: marker.getPosition().lat(), long: marker.getPosition().lng(), timestamp: timestamp, password: password}, 
             error: function(data){
+                console.log(data);
                 alert("Error uploading: " + data);
             },
             success: function(data){
+                console.log(data);
             }
         });
     }
