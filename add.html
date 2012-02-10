@@ -58,7 +58,7 @@ jQuery(document).ready(function() {
             window.password = window.prompt('Enter password:');
             $.cookie('auth', password, {expires: 30, path: '/'} );  
         }
-        var intervalID = setInterval(getCoords, 300000);
+        var intervalID = setInterval(getCoords, 600000);
         getCoords();
     } else {
         alert("Your browser doesn't support geolocation. This page will do nothing.");
