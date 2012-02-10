@@ -6,7 +6,7 @@
 <script type="text/javascript" src="jquery.cookie.js"></script>
 <script type="text/javascript" src="map.js"></script>
 <script type="text/javascript">
-    var vertexes = [];
+    var addVertexes = [];
 
     function saveCoords(marker, timestamp){
         if (typeof timestamp === "undefined"){
@@ -34,7 +34,7 @@
                     map: window.map
             });
         var timestamp = Math.round(new Date().getTime() / 1000);
-        vertexes.push([marker, timestamp]);
+        addVertexes.push([marker, timestamp]);
         window.map.panTo(marker.getPosition());
         });
 
@@ -42,8 +42,8 @@
 
     function submit(){
         if (navigator.geolocation) {
-            for(var i = 0; i< vertexes.length; i++){
-                saveCoords(vertexes[i][0], vertexes[i][1]);
+            for(var i = 0; i< addVertexes.length; i++){
+                saveCoords(addVertexes[i][0], addVertexes[i][1]);
             }
         }
     }
